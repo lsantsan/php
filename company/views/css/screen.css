@@ -1,0 +1,1169 @@
+/*
+    Created on : May 03, 2015, 9:45:59 AM
+    Author     : Lucas Santana
+    Purpose    : Control the appearance of screen devices
+*/
+
+/*! normalize.css v3.0.2 | MIT License | git.io/normalize */
+
+/**
+ * 1. Set default font family to sans-serif.
+ * 2. Prevent iOS text size adjust after orientation change, without disabling
+ *    user zoom.
+ */
+/** {
+ box-sizing: border-box;
+}*/
+
+/*! B1 - normalize.css v3.0.2 | MIT License | git.io/normalize */
+
+/**
+ * 1. Set default font family to sans-serif.
+ * 2. Prevent iOS text size adjust after orientation change, without disabling
+ *    user zoom.
+ */
+
+html {
+    font-family: sans-serif; /* 1 */
+    -ms-text-size-adjust: 100%; /* 2 */
+    -webkit-text-size-adjust: 100% /* 2 */
+}
+
+/**
+ * Remove default margin.
+ */
+
+body {
+    margin: 0;
+}
+
+/* HTML5 display definitions
+   ========================================================================== */
+
+/**
+ * Correct `block` display not defined for any HTML5 element in IE 8/9.
+ * Correct `block` display not defined for `details` or `summary` in IE 10/11
+ * and Firefox.
+ * Correct `block` display not defined for `main` in IE 11.
+ */
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+main,
+menu,
+nav,
+section,
+summary {
+    display: block;
+}
+
+/**
+ * 1. Correct `inline-block` display not defined in IE 8/9.
+ * 2. Normalize vertical alignment of `progress` in Chrome, Firefox, and Opera.
+ */
+
+audio,
+canvas,
+progress,
+video {
+    display: inline-block; /* 1 */
+    vertical-align: baseline /* 2 */
+}
+
+/**
+ * Prevent modern browsers from displaying `audio` without controls.
+ * Remove excess height in iOS 5 devices.
+ */
+
+audio:not([controls]) {
+    display: none;
+    height: 0;
+}
+
+/**
+ * Address `[hidden]` styling not present in IE 8/9/10.
+ * Hide the `template` element in IE 8/9/11, Safari, and Firefox < 22.
+ */
+
+[hidden],
+template {
+    display: none;
+}
+
+/* Links
+   ========================================================================== */
+
+/**
+ * Remove the gray background color from active links in IE 10.
+ */
+
+a {
+    background-color: transparent;
+}
+
+/**
+ * Improve readability when focused and also mouse hovered in all browsers.
+ */
+
+a:active,
+a:hover {
+    outline: 0;
+}
+
+/* Text-level semantics
+   ========================================================================== */
+
+/**
+ * Address styling not present in IE 8/9/10/11, Safari, and Chrome.
+ */
+
+abbr[title] {
+    border-bottom: 1px dotted;
+}
+
+/**
+ * Address style set to `bolder` in Firefox 4+, Safari, and Chrome.
+ */
+
+b,
+strong {
+    font-weight: bold;
+}
+
+/**
+ * Address styling not present in Safari and Chrome.
+ */
+
+dfn {
+    font-style: italic;
+}
+
+/**
+ * Address variable `h1` font-size and margin within `section` and `article`
+ * contexts in Firefox 4+, Safari, and Chrome.
+ */
+
+h1 {
+    font-size: 2em;
+    margin: 0.67em 0;
+}
+
+/**
+ * Address styling not present in IE 8/9.
+ */
+
+mark {
+    background: #ff0;
+    color: #000;
+}
+
+/**
+ * Address inconsistent and variable font size in all browsers.
+ */
+
+small {
+    font-size: 80%;
+}
+
+/**
+ * Prevent `sub` and `sup` affecting `line-height` in all browsers.
+ */
+
+sub,
+sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+}
+
+sup {
+    top: -0.5em;
+}
+
+sub {
+    bottom: -0.25em;
+}
+
+/* Embedded content
+   ========================================================================== */
+
+/**
+ * Remove border when inside `a` element in IE 8/9/10.
+ */
+
+img {
+    border: 0;
+}
+
+/**
+ * Correct overflow not hidden in IE 9/10/11.
+ */
+
+svg:not(:root) {
+    overflow: hidden;
+}
+
+/* Grouping content
+   ========================================================================== */
+
+/**
+ * Address margin not present in IE 8/9 and Safari.
+ */
+
+figure {
+    margin: 1em 40px;
+}
+
+/**
+ * Address differences between Firefox and other browsers.
+ */
+
+hr {
+    box-sizing: content-box;
+    height: 0;
+}
+
+/**
+ * Contain overflow in all browsers.
+ */
+
+pre {
+    overflow: auto;
+}
+
+/**
+ * Address odd `em`-unit font size rendering in all browsers.
+ */
+
+code,
+kbd,
+pre,
+samp {
+    font-family: monospace, monospace;
+    font-size: 1em;
+}
+
+/* Forms
+   ========================================================================== */
+
+/**
+ * Known limitation: by default, Chrome and Safari on OS X allow very limited
+ * styling of `select`, unless a `border` property is set.
+ */
+
+/**
+ * 1. Correct color not being inherited.
+ *    Known issue: affects color of disabled elements.
+ * 2. Correct font properties not being inherited.
+ * 3. Address margins set differently in Firefox 4+, Safari, and Chrome.
+ */
+
+button,
+input,
+optgroup,
+select,
+textarea {
+    color: inherit; /* 1 */
+    font: inherit; /* 2 */
+    margin: 0 /* 3 */
+}
+
+/**
+ * Address `overflow` set to `hidden` in IE 8/9/10/11.
+ */
+
+button {
+    overflow: visible;
+}
+
+/**
+ * Address inconsistent `text-transform` inheritance for `button` and `select`.
+ * All other form control elements do not inherit `text-transform` values.
+ * Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.
+ * Correct `select` style inheritance in Firefox.
+ */
+
+button,
+select {
+    text-transform: none;
+}
+
+/**
+ * 1. Avoid the WebKit bug in Android 4.0.* where (2) destroys native `audio`
+ *    and `video` controls.
+ * 2. Correct inability to style clickable `input` types in iOS.
+ * 3. Improve usability and consistency of cursor style between image-type
+ *    `input` and others.
+ */
+
+button,
+html input[type="button"], /* 1 */
+input[type="reset"],
+input[type="submit"] {
+    -webkit-appearance: button; /* 2 */
+    cursor: pointer /* 3 */
+}
+
+/**
+ * Re-set default cursor for disabled elements.
+ */
+
+button[disabled],
+html input[disabled] {
+    cursor: default;
+}
+
+/**
+ * Remove inner padding and border in Firefox 4+.
+ */
+
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+
+/**
+ * Address Firefox 4+ setting `line-height` on `input` using `!important` in
+ * the UA stylesheet.
+ */
+
+input {
+    line-height: normal;
+}
+
+/**
+ * It's recommended that you don't attempt to style these elements.
+ * Firefox's implementation doesn't respect box-sizing, padding, or width.
+ *
+ * 1. Address box sizing set to `content-box` in IE 8/9/10.
+ * 2. Remove excess padding in IE 8/9/10.
+ */
+
+input[type="checkbox"],
+input[type="radio"] {
+    box-sizing: border-box; /* 1 */
+    padding: 0 /* 2 */
+}
+
+/**
+ * Fix the cursor style for Chrome's increment/decrement buttons. For certain
+ * `font-size` values of the `input`, it causes the cursor style of the
+ * decrement button to change from `default` to `text`.
+ */
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    height: auto;
+}
+
+/**
+ * 1. Address `appearance` set to `searchfield` in Safari and Chrome.
+ * 2. Address `box-sizing` set to `border-box` in Safari and Chrome
+ *    (include `-moz` to future-proof).
+ */
+
+input[type="search"] {
+    -webkit-appearance: textfield; /* 1 */ /* 2 */
+    box-sizing: content-box;
+}
+
+/**
+ * Remove inner padding and search cancel button in Safari and Chrome on OS X.
+ * Safari (but not Chrome) clips the cancel button when the search input has
+ * padding (and `textfield` appearance).
+ */
+
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+    -webkit-appearance: none;
+}
+
+/**
+ * Define consistent border, margin, and padding.
+ */
+
+fieldset {
+    border: 0;
+    margin: 0 2px;
+    padding: 0.35em 0.625em 0.75em;
+}
+
+/**
+ * 1. Correct `color` not being inherited in IE 8/9/10/11.
+ * 2. Remove padding so people aren't caught out if they zero out fieldsets.
+ */
+
+legend {
+    border: 0; /* 1 */
+    padding: 0 /* 2 */
+}
+
+/**
+ * Remove default vertical scrollbar in IE 8/9/10/11.
+ */
+
+textarea {
+    overflow: auto;
+}
+
+/**
+ * Don't inherit the `font-weight` (applied by a rule above).
+ * NOTE: the default cannot safely be changed in Chrome and Safari on OS X.
+ */
+
+optgroup {
+    font-weight: bold;
+}
+
+/* =================== Tables ===================== */
+
+/**
+ * Remove most spacing between table cells.
+ */
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+td,
+th {
+    padding: 0;
+}
+
+/********************* Begin My Styles  ****************************************/
+
+body {
+    font-size: 16px;
+    font-size: 1em;
+    /*margin: 1em;*/
+}
+
+body > div {
+    margin: 2em auto;
+    width: 980px;
+    height: auto;
+}
+
+footer {
+    display: inline;
+    margin: 10em;
+}
+
+textarea {
+    resize: vertical;
+}
+
+img, video {
+    max-width: 100%;
+}
+
+table {
+    border-collapse: collapse;
+    font-size: .83em;
+
+}
+
+table, td, th {
+    border: 1px solid black;
+}
+
+td {
+    padding: .5em;
+}
+
+input[type="checkbox"] {
+    width: 17px;
+    height: 17px;
+}
+
+/*********************** HEADER ********************************/
+
+#header_bar {
+    width: 100%;
+    height: 5em;
+    margin: 0em;
+    background-color: #003768;
+}
+
+/********************** TYPOGRAPHY *************************/
+
+h1 {
+    color: #003768;
+    font-size: 1.5em;
+}
+
+p, span {
+    font-size: 1.15em;
+    font-family: "Arial", Helvetica, sans-serif;
+    color: #003768;
+}
+
+table {
+    font-family: "Arial", Helvetica, sans-serif;;
+}
+
+th {
+    font-size: 1.25em;
+}
+
+td {
+    font-size: 1.15em;
+
+}
+
+label {
+    font-size: 1.15em;
+    font-family: "Arial", Helvetica, sans-serif;
+    color: #003768;
+}
+
+form {
+    margin: 1em;
+}
+
+label {
+    display: inline-block;
+}
+
+#icon_credit {
+    font-size: 7px;
+    margin: 25em 0em;
+}
+
+/*********************** CLASSES FOR PATTERN ********************************/
+
+/***** CONTENT CONTAINER ******/
+.content_container {
+    margin: auto;
+    height: auto;
+    border-width: .25em;
+    border-style: solid;
+    border-color: #003768;
+    border-radius: 15px;
+}
+
+.container_title {
+    padding: 1em;
+    background-color: #266195;
+    border-bottom-width: .25em;
+    /*border-bottom-style: solid;*/
+    border-bottom-color: #003768;
+    border-top-left-radius: 10.5px;
+    border-top-right-radius: 10.5px;
+}
+
+.container_title span {
+    color: white;
+    font-weight: bold;
+    font-size: 1.25em;
+}
+
+/***** BUTTON ******/
+.button {
+    font-weight: bold;
+    color: white;
+    background-color: #266195;
+    border-radius: 15px;
+    width: 5em;
+    height: 2em;
+}
+
+.button:hover {
+    background-color: #003768;
+}
+
+.button:disabled {
+    background-color: gray;
+}
+
+.button_container {
+    width: 100%;
+    margin-bottom: 4em;
+}
+
+.button_container input {
+    float: right;
+    margin-top: 1em;
+}
+
+/**** TABLE  ********/
+.tablesorter th {
+    padding: .75em;
+}
+
+.tablesorter img {
+    width: 1.5em;
+    margin: 0 .5em;
+}
+
+.tablesorter .view_essays_img {
+    width: 1.25em;
+}
+
+/*********************** MAIN ********************************/
+
+#main_container {
+    margin: 2em;
+}
+
+.containers {
+    height: auto;
+    width: 50%;
+}
+
+#teacher_container {
+    float: left;
+}
+
+#student_container {
+    float: right;
+}
+
+.containers div {
+    width: 50%;
+    margin: auto;
+}
+
+.containers p {
+    font-size: 2em;
+    text-align: center;
+    margin: 0em;
+    color: #003768;
+}
+
+.containers a {
+    text-decoration: none;
+}
+
+/*************************** LOGIN *****************************************/
+#login_main {
+    margin: 5em auto;
+}
+
+#login_container {
+    width: 30%;
+    /*height: 21em;  */
+    height: auto;
+    margin: auto;
+    border-width: .5em;
+    border-style: solid;
+    border-color: #003768;
+    border-radius: 15px;
+
+}
+
+#login_container div:not(.error_message_container) {
+    margin: 2em 3em;
+    margin-bottom: 0;
+}
+
+#login_container .error_message_container {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 1em;
+}
+
+#login_form {
+    margin: 0;
+}
+
+#logo figure {
+    margin: 0;
+}
+
+#login {
+    text-align: center;
+}
+
+#login label {
+    color: #003768;
+    font-weight: bold;
+}
+
+#login input {
+    margin: 0.25em 0 1.5em 0;
+}
+
+.error_message_container {
+    display: inline-block;
+    vertical-align: -webkit-baseline-middle;
+}
+
+.error_message {
+    display: none;
+    font-size: 1em;
+    font-weight: bold;
+    color: red;
+    vertical-align: baseline;
+}
+
+.success_message {
+    display: none;
+    font-size: 1em;
+    font-weight: bold;
+    color: green;
+    vertical-align: baseline;
+}
+
+/************************* INSTRUCTOR ************************/
+
+#sub_header {
+    display: inline-block;
+    width: 100%;
+}
+
+#sub_header div {
+    width: 50%;
+}
+
+#sub_header_logo {
+    float: left;
+}
+
+#sub_header_gretting {
+    float: right;
+    text-align: right;
+}
+
+#sub_header_gretting ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: inline-block;
+}
+
+#sub_header_gretting ul li {
+    display: inline-block;
+    position: relative;
+    text-align: right;
+}
+
+#sub_header_gretting ul li a:not(#username) {
+    display: block;
+    padding: 8px 10px;
+    color: #003768;
+    text-decoration: none;
+    font-size: .7em;
+}
+
+#sub_header_gretting ul li a:hover {
+    color: #fff;
+    background: #939393;
+}
+
+#sub_header_gretting ul li ul.dropdown {
+    min-width: 120px;
+    background: #f2f2f2;
+    display: none;
+    position: absolute;
+    right: 0;
+}
+
+#sub_header_gretting ul li:hover ul.dropdown {
+    display: block;
+}
+
+#sub_header_gretting ul li ul.dropdown li {
+    display: block;
+    text-align: center;
+}
+
+#username {
+    margin: 0;
+    padding: 0;
+}
+
+.caret {
+    display: inline-block;
+    vertical-align: middle;
+    border-top: 4px dashed;
+    border-right: 4px solid transparent;
+    border-left: 4px solid transparent;
+}
+
+#user_options {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: inline-block;
+}
+
+.create_button {
+    margin: 1.5em 0 3em 0;
+    width: 7em;
+    height: 3em;
+    color: #66FF66;
+    font-weight: bold;
+}
+
+#history_table {
+    width: 100%;
+}
+
+.tablesorter-header-inner {
+    cursor: pointer;
+}
+
+table, th, td {
+    color: #003768;
+    border: 2px solid #003768;
+}
+
+tr:hover {
+    background-color: #DBDDDB;
+}
+
+td {
+    text-align: center;
+    width: 1px;
+    white-space: nowrap;
+}
+
+th {
+    background-color: #266195;
+    color: white;
+}
+
+.code_column {
+    width: 1%;
+}
+
+.topic_column {
+    white-space: pre-wrap;
+    width: 50%;
+}
+
+.time_column {
+    width: 1%;
+}
+
+.actions_column {
+    width: 10%;
+}
+
+.labels tr td {
+    background-color: lightgrey;
+    font-weight: bold;
+}
+
+.labels label{
+    cursor: pointer;
+    color: #266195;
+}
+
+.label tr td label {
+    display: block;
+}
+
+[data-toggle="toggle"] {
+    display: none;
+}
+
+/************************* CREATE TEST ************************/
+
+#create_container {
+    width: 50%;
+    margin-top: 1.5em;
+}
+
+#create_form_label {
+    margin-top: 1em;
+}
+
+#create_test_form textarea {
+    width: 100%;
+    margin-top: .25em;
+}
+
+#create_test_form #bottom_container {
+    margin-top: 1em;
+    margin-bottom: 1.5em;
+}
+
+#create_test_form #error_message_container {
+    display: inline-block;
+    vertical-align: -webkit-baseline-middle;
+}
+
+#create_test_form .button_container {
+    float: right;
+    width: 0;
+}
+
+#create_test_form input {
+    margin: 0;
+}
+
+#row_container {
+    display: inline-flex;
+    width: 100%;
+    text-align: center;
+}
+
+#row_container div {
+    width: 33%;
+}
+
+#row_container label {
+    padding-bottom: 0.3em;
+}
+
+#row_container input, span, select {
+    vertical-align: -webkit-baseline-middle;
+}
+
+#duration_input {
+    width: 3em;
+}
+
+/************************* WRITING TEST ************************/
+
+#writing_container {
+    width: 100%;
+    margin-top: 1.5em;
+}
+
+.writing_label_line {
+    display: inline-block;
+    width: 100%;
+    margin: .25em 0;
+}
+
+.writing_left_col {
+    float: left;
+}
+
+.writing_right_col {
+    float: right;
+}
+
+#instructions_label {
+    margin-top: 1.2em;
+}
+
+.prompt_label {
+    margin: .5em 0;
+    color: darkorange;
+    font-size: 1.5em;
+}
+
+#essay_textarea {
+    width: 100%;
+    line-height: 1.5em;
+    min-height: 340px;
+}
+
+/*#writing_form .button_container{
+    margin-bottom: 4em;
+}*/
+/************************* PRINT PAGE ************************/
+
+#essay_view_container_title {
+    text-align: center;
+}
+
+#essay_view_container {
+    width: 70%;
+    margin-top: 1.5em;
+    float: right;
+}
+
+#student_list_container {
+    display: inline-block;
+    margin-top: 1.5em;
+    width: 25%;
+}
+
+#student_list_container_title {
+    text-align: center;
+}
+
+#student_list_form div:not(.button_container) {
+    margin-top: 1em;
+}
+
+#hide_names_div label {
+    width: 80%;
+}
+
+#id_name_div label {
+    width: 70%;
+}
+
+#id_name_div input {
+    float: right;
+    margin-right: 2.1em;
+    position: relative;
+    top: 2.5px;
+}
+
+#student_list_form div:hover:not(#names_container):not(#id_name_div):not(#hide_names_div) {
+    background-color: #DBDDDB;
+}
+
+#student_list_form input[type="checkbox"]:not(#hide_names_checkbox):not(#id_name_list_checkbox) {
+    float: right;
+    margin-right: 1em;
+    position: relative;
+    top: 2.5px;
+}
+
+#id_name_div {
+    padding-bottom: 1em;
+    border-bottom-width: .2em;
+    border-bottom-style: solid;
+    border-bottom-color: #003768;
+}
+
+#all_essays_div {
+    font-weight: bold;
+}
+
+#hide_names_div {
+    border-top-width: .2em;
+    border-top-style: solid;
+    border-top-color: #003768;
+}
+
+#hide_names_div input[type="checkbox"] {
+    position: relative;
+    top: 3px;
+}
+
+#hide_names_div label {
+    margin-left: .25em;
+}
+
+#names_container {
+    height: 22em;
+    overflow-y: scroll;
+}
+
+#name_container label {
+    cursor: pointer;
+}
+
+#id_name_div label {
+    cursor: pointer;
+}
+
+#nameID_list {
+    padding: 0;
+    list-style: none;
+    text-align: center;
+}
+
+#nameID_list li {
+    margin: 1em 5em;
+    background-color: #DBDDDB;
+}
+
+#nameID_list span {
+    margin: 0em 1em;
+}
+
+/************************* ADMIN PAGE ************************/
+
+#new_account_button_container {
+    height: 6em;
+}
+
+#table_title_container h1 {
+    margin-left: 4em;
+    color: darkorange;
+}
+
+#account_table {
+    width: 80%;
+    margin: auto;
+}
+
+.username_column {
+    width: .5%;
+}
+
+.name_column {
+    width: 5%;
+}
+
+.isAdmin_column {
+    width: .5%;
+}
+
+#account_table .actions_column {
+    width: 1%;
+}
+
+/************************* NEW ACCOUNT PAGE ************************/
+
+#create_account_form #bottom_container {
+    margin: 1.5em 1em;
+}
+
+#create_account_form #error_message_container {
+    display: inline-block;
+    vertical-align: -webkit-baseline-middle;
+}
+
+#create_account_form .button_container {
+    float: right;
+    width: 0;
+}
+
+#create_account_form #row_container div {
+    width: 50%;
+}
+
+#create_account_form input[type="text"],
+#create_account_form input[type="password"] {
+    width: 80%;
+}
+
+#create_account_form input {
+    margin: 0;
+}
+
+/************************* EDIT TEACHER ACCOUNT PAGE ************************/
+#edit_teacher_account_form #bottom_container {
+    margin: 2em 1em;
+}
+
+#edit_teacher_account_form #error_message_container {
+    display: inline-block;
+    vertical-align: -webkit-baseline-middle;
+}
+
+#edit_teacher_account_form .button_container {
+    float: right;
+    width: 0;
+}
+
+#edit_teacher_account_form #row_container div {
+    width: 50%;
+}
+
+#edit_teacher_account_form input[type="text"],
+#edit_teacher_account_form input[type="password"] {
+    width: 80%;
+}
+
+#edit_teacher_account_form input {
+    margin: 0;
+}
+
+#edit_teacher_account_form #row_container span {
+    font-size: .7em;
+}
+
+.teacher_title_container h1 {
+    margin-top: 2em;
+    color: darkorange;
+}
