@@ -321,7 +321,7 @@ class Teachers_POST_Test extends BasicTestCase
         $code = 'proc-100';
         $message = 'Database Error';
         $pdoMessage = 'Message from PDOException';
-        $details = "$pdoMessage [FILE: C:\\wamp64\\www\\restful\\api\\v1\\tests\\unitTest\\teachers\\Teachers_POST_Test.php] [LINE: 338]";
+        $details = "$pdoMessage [FILE: C:\\wamp64\\www\\php\\restful\\api\\v1\\tests\\unitTest\\teachers\\Teachers_POST_Test.php] [LINE: 338]";
         $httpCode = 500;
 
         $jsonInput = $this->createInputJson($accessToken, $username, $firstName, $lastName, $password, $isAdmin);

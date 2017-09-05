@@ -270,7 +270,7 @@ class Teachers_GET_Test extends BasicTestCase
         $code = 'proc-100';
         $message = 'Database Error';
         $pdoMessage = 'Message from PDOException';
-        $details = "$pdoMessage [FILE: C:\\wamp64\\www\\restful\\api\\v1\\tests\\unitTest\\teachers\\Teachers_GET_Test.php] [LINE: 287]";
+        $details = "$pdoMessage [FILE: C:\\wamp64\\www\\php\\restful\\api\\v1\\tests\\unitTest\\teachers\\Teachers_GET_Test.php] [LINE: 287]";
         $httpCode = 500;
 
         $arrayInput = array('accessToken' => $accessToken);

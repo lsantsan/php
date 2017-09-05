@@ -192,7 +192,7 @@ class AccessToken_POST_Test extends BasicTestCase
         $code = 'proc-100';
         $message = 'Database Error';
         $pdoMessage = 'Message from PDOException';
-        $details = "$pdoMessage [FILE: C:\\wamp64\\www\\restful\\api\\v1\\tests\\unitTest\\teachers\\accessToken\\AccessToken_POST_Test.php] [LINE: 209]";
+        $details = "$pdoMessage [FILE: C:\\wamp64\\www\\php\\restful\\api\\v1\\tests\\unitTest\\teachers\\accessToken\\AccessToken_POST_Test.php] [LINE: 209]";
         $httpCode = 500;
 
         $jsonInput = $this->createInputJson($username, $password);
