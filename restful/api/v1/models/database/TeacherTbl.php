@@ -152,4 +152,23 @@ class TeacherTbl
         return $teacher;
     }
 
+    public function getTeacherByUsername($fv_teacher_username)
+    {
+        $sql = "CALL proc_retrieve_account_by_username(:teacherUsername)";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':teacherUsername', $fv_teacher_username, PDO::PARAM_INT);
+        $stmt->execute();
+        $dbTeacher = $stmt->fetch();
+        $teacher = new Teacher(
+            $dbTeacher['id'],
+            $dbTeacher['username'],
+            $dbTeacher['first_name'],
+            $dbTeacher['last_name'],
+            $dbTeacher['is_admin'],
+            $dbTeacher['is_active'],
+            $dbTeacher['reset_password'],
+            $dbTeacher['creation_date']);
+        return $teacher;
+    }
+
 }

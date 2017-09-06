@@ -111,7 +111,9 @@ class Teachers extends AbstractService
             return $this->getAll();
         } else {
             if (ctype_digit($teacherParam)) {
-                return $this->getOne($teacherParam);
+                return $this->getById($teacherParam);
+            }else{
+                return $this->getByUsername($teacherParam);
             }
         }
 
@@ -144,7 +146,34 @@ class Teachers extends AbstractService
         }
     }
 
-    private function getOne($teacherId)
+    private function getById($teacherId)
+{
+    $requiredInputsArray = ['accessToken'];
+    try {
+        $this->setup($requiredInputsArray);
+
+        //Handling inputs
+        $lv_accessToken = $this->inputArray['accessToken'];
+
+        //Checking consumer's access
+        $consumerId = $this->hasAccess($lv_accessToken);
+        $this->isAdmin($consumerId);
+
+        //Creating teacher account
+        $teacher = $this->databaseObj->teacherTbl->getTeacherById($teacherId);
+
+        return $teacher;
+    } catch (PDOException $ex) {
+        $detail = "{$ex->getMessage()} [FILE: {$ex->getFile()}] [LINE: {$ex->getLine()}]";
+        $responseMessage = new Message("proc-100", "Database Error", $detail);
+        $httpCode = 500;
+        throw new ServiceException($responseMessage, $httpCode);
+    } catch (ServiceException $ex) {
+        throw $ex;
+    }
+}
+
+    private function getByUsername($teacherUsername)
     {
         $requiredInputsArray = ['accessToken'];
         try {
@@ -158,7 +187,7 @@ class Teachers extends AbstractService
             $this->isAdmin($consumerId);
 
             //Creating teacher account
-            $teacher = $this->databaseObj->teacherTbl->getTeacherById($teacherId);
+            $teacher = $this->databaseObj->teacherTbl->getTeacherByUsername($teacherUsername);
 
             return $teacher;
         } catch (PDOException $ex) {
@@ -170,5 +199,4 @@ class Teachers extends AbstractService
             throw $ex;
         }
     }
-
 }

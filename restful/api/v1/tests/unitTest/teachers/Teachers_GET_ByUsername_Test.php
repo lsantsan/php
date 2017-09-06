@@ -9,13 +9,13 @@ use \PDOException;
 
 require_once(__DIR__ . '/../BasicTestCase.php');
 
-class Teachers_GET_One_Test extends BasicTestCase
+class Teachers_GET_ByUsername_Test extends BasicTestCase
 {
 
-    const TEACHER_ID = 3342;
+    const TEACHER_USERNAME = "teacher123";
     protected $serviceDataArray = array(
         'method' => 'GET',
-        'url' => [Teachers_GET_One_Test::TEACHER_ID]);
+        'url' => [Teachers_GET_ByUsername_Test::TEACHER_USERNAME]);
     protected $requiredInputsArray = ['accessToken'];
     protected $basenameFile = 'Teachers.php';
 
@@ -23,7 +23,7 @@ class Teachers_GET_One_Test extends BasicTestCase
     {
         //Defining the mocked methods
         $this->createUtilMock(['checkInput', 'nullCheckForTables']);
-        $this->createTableMock('TeacherTbl', ['getTeacherById', 'isTeacherAdmin']);
+        $this->createTableMock('TeacherTbl', ['getTeacherByUsername', 'isTeacherAdmin']);
         $this->createTableMock('TokenTbl', ['retrieveToken']);
 
         //Input
@@ -64,9 +64,9 @@ class Teachers_GET_One_Test extends BasicTestCase
             ->willReturn(1);
 
         $this->_teacherTblStub->expects($this->once())
-            ->method('getTeacherById')
+            ->method('getTeacherByUsername')
             ->with(
-                $this->stringContains(Teachers_GET_One_Test::TEACHER_ID)
+                $this->stringContains(Teachers_GET_ByUsername_Test::TEACHER_USERNAME)
             )
             ->willReturn($teacherOutputArray);
 
@@ -107,7 +107,7 @@ class Teachers_GET_One_Test extends BasicTestCase
 
         // IMPLEMENTING STUB's METHODS
         $this->_teacherTblStub->expects($this->never())
-            ->method('getTeacherById');
+            ->method('getTeacherByUsername');
 
         //TRIGGERING CALL
         $teacherService = new TeachersServiceController($this->serviceDataArray, $this->dependencyArray);
@@ -152,7 +152,7 @@ class Teachers_GET_One_Test extends BasicTestCase
         $this->_teacherTblStub->expects($this->never())
             ->method('isTeacherAdmin');
         $this->_teacherTblStub->expects($this->never())
-            ->method('getTeacherById');
+            ->method('getTeacherByUsername');
 
 
         //TRIGGERING CALL
@@ -197,7 +197,7 @@ class Teachers_GET_One_Test extends BasicTestCase
         $this->_teacherTblStub->expects($this->never())
             ->method('isTeacherAdmin');
         $this->_teacherTblStub->expects($this->never())
-            ->method('getTeacherById');
+            ->method('getTeacherByUsername');
 
 
         //TRIGGERING CALL
@@ -213,7 +213,7 @@ class Teachers_GET_One_Test extends BasicTestCase
         //Defining the mocked methods
         $this->createUtilMock(['checkInput', 'nullCheckForTables']);
         $this->createTableMock('TokenTbl', ['retrieveToken']);
-        $this->createTableMock('TeacherTbl', ['isTeacherAdmin', 'getTeacherById']);
+        $this->createTableMock('TeacherTbl', ['isTeacherAdmin', 'getTeacherByUsername']);
 
         //Input
         $accessToken = 'asdvaq234';
@@ -246,7 +246,7 @@ class Teachers_GET_One_Test extends BasicTestCase
             ->willReturn(0);
 
         $this->_teacherTblStub->expects($this->never())
-            ->method('getTeacherById');
+            ->method('getTeacherByUsername');
 
 
         //TRIGGERING CALL
@@ -261,7 +261,7 @@ class Teachers_GET_One_Test extends BasicTestCase
     {
         //Defining the mocked methods
         $this->createUtilMock(['checkInput', 'nullCheckForTables']);
-        $this->createTableMock('TeacherTbl', ['isTeacherAdmin', 'getTeacherById']);
+        $this->createTableMock('TeacherTbl', ['isTeacherAdmin', 'getTeacherByUsername']);
         $this->createTableMock('TokenTbl', ['retrieveToken']);
 
         //Input
@@ -271,7 +271,7 @@ class Teachers_GET_One_Test extends BasicTestCase
         $code = 'proc-100';
         $message = 'Database Error';
         $pdoMessage = 'Message from PDOException';
-        $details = "$pdoMessage [FILE: C:\\wamp64\\www\\php\\restful\\api\\v1\\tests\\unitTest\\teachers\\Teachers_GET_One_Test.php] [LINE: 288]";
+        $details = "$pdoMessage [FILE: C:\\wamp64\\www\\php\\restful\\api\\v1\\tests\\unitTest\\teachers\\Teachers_GET_ByUsername_Test.php] [LINE: 288]";
         $httpCode = 500;
 
         $arrayInput = array('accessToken' => $accessToken);
@@ -290,7 +290,7 @@ class Teachers_GET_One_Test extends BasicTestCase
         $this->_teacherTblStub->expects($this->never())
             ->method('isTeacherAdmin');
         $this->_teacherTblStub->expects($this->never())
-            ->method('getTeacherById');
+            ->method('getTeacherByUsername');
 
 
         //TRIGGERING CALL
@@ -343,7 +343,7 @@ class Teachers_GET_One_Test extends BasicTestCase
         $this->_teacherTblStub->expects($this->never())
             ->method('isTeacherAdmin');
         $this->_teacherTblStub->expects($this->never())
-            ->method('getTeacherById');
+            ->method('getTeacherByUsername');
 
         //TRIGGERING CALL
         $teacherService = new TeachersServiceController($this->serviceDataArray, $this->dependencyArray);
