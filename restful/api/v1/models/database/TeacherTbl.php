@@ -133,4 +133,23 @@ class TeacherTbl
         return $list;
     }
 
+    public function getTeacherById($fv_teacher_id)
+    {
+        $sql = "CALL proc_retrieve_account_by_id(:teacherId)";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':teacherId', $fv_teacher_id, PDO::PARAM_INT);
+        $stmt->execute();
+        $dbTeacher = $stmt->fetch();
+        $teacher = new Teacher(
+            $dbTeacher['id'],
+            $dbTeacher['username'],
+            $dbTeacher['first_name'],
+            $dbTeacher['last_name'],
+            $dbTeacher['is_admin'],
+            $dbTeacher['is_active'],
+            $dbTeacher['reset_password'],
+            $dbTeacher['creation_date']);
+        return $teacher;
+    }
+
 }

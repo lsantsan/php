@@ -9,7 +9,7 @@ use \PDOException;
 
 require_once(__DIR__ . '/../BasicTestCase.php');
 
-class Teachers_GET_Test extends BasicTestCase
+class Teachers_GET_All_Test extends BasicTestCase
 {
 
     protected $serviceDataArray = array(
@@ -270,7 +270,7 @@ class Teachers_GET_Test extends BasicTestCase
         $code = 'proc-100';
         $message = 'Database Error';
         $pdoMessage = 'Message from PDOException';
-        $details = "$pdoMessage [FILE: C:\\wamp64\\www\\php\\restful\\api\\v1\\tests\\unitTest\\teachers\\Teachers_GET_Test.php] [LINE: 287]";
+        $details = "$pdoMessage [FILE: C:\\wamp64\\www\\php\\restful\\api\\v1\\tests\\unitTest\\teachers\\Teachers_GET_All_Test.php] [LINE: 287]";
         $httpCode = 500;
 
         $arrayInput = array('accessToken' => $accessToken);

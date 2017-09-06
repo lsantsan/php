@@ -105,7 +105,46 @@ class Teachers extends AbstractService
         }
     }
 
-    public function get()
+    public function get($teacherParam = null)
+    {
+        if (is_null($teacherParam)) {
+            return $this->getAll();
+        } else {
+            if (ctype_digit($teacherParam)) {
+                return $this->getOne($teacherParam);
+            }
+        }
+
+    }
+
+    private function getAll()
+    {
+        $requiredInputsArray = ['accessToken'];
+        try {
+            $this->setup($requiredInputsArray);
+
+            //Handling inputs
+            $lv_accessToken = $this->inputArray['accessToken'];
+
+            //Checking consumer's access
+            $consumerId = $this->hasAccess($lv_accessToken);
+            $this->isAdmin($consumerId);
+
+            //Creating teacher accounts
+            $teacherList = $this->databaseObj->teacherTbl->getAllTeachers($consumerId);
+
+            return $teacherList;
+        } catch (PDOException $ex) {
+            $detail = "{$ex->getMessage()} [FILE: {$ex->getFile()}] [LINE: {$ex->getLine()}]";
+            $responseMessage = new Message("proc-100", "Database Error", $detail);
+            $httpCode = 500;
+            throw new ServiceException($responseMessage, $httpCode);
+        } catch (ServiceException $ex) {
+            throw $ex;
+        }
+    }
+
+    private function getOne($teacherId)
     {
         $requiredInputsArray = ['accessToken'];
         try {
@@ -119,11 +158,9 @@ class Teachers extends AbstractService
             $this->isAdmin($consumerId);
 
             //Creating teacher account
-            $teacherList = $this->databaseObj->teacherTbl->getAllTeachers($consumerId);
+            $teacher = $this->databaseObj->teacherTbl->getTeacherById($teacherId);
 
-           /* //Building JSON response
-            $resultArray = $teacherList;*/
-            return $teacherList;
+            return $teacher;
         } catch (PDOException $ex) {
             $detail = "{$ex->getMessage()} [FILE: {$ex->getFile()}] [LINE: {$ex->getLine()}]";
             $responseMessage = new Message("proc-100", "Database Error", $detail);
@@ -132,8 +169,6 @@ class Teachers extends AbstractService
         } catch (ServiceException $ex) {
             throw $ex;
         }
-
     }
-
 
 }
