@@ -130,6 +130,7 @@ class TeacherTbl
                 );
             }
         }
+        $stmt->closeCursor();
         return $list;
     }
 
@@ -149,6 +150,7 @@ class TeacherTbl
             $dbTeacher['is_active'],
             $dbTeacher['reset_password'],
             $dbTeacher['creation_date']);
+        $stmt->closeCursor();
         return $teacher;
     }
 
@@ -168,6 +170,7 @@ class TeacherTbl
             $dbTeacher['is_active'],
             $dbTeacher['reset_password'],
             $dbTeacher['creation_date']);
+        $stmt->closeCursor();
         return $teacher;
     }
 

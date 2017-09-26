@@ -9,6 +9,7 @@ use \ReflectionClass;
 require_once(__DIR__ . '/../AbstractServiceController.php');
 require_once(__DIR__ . '/../Util.php');
 require_once(__DIR__ . '/resources/AccessToken.php');
+require_once(__DIR__ . '/resources/Tests.php');
 require_once(__DIR__ . '/resources/Teachers.php');
 
 class TeachersServiceController extends AbstractServiceController
@@ -44,7 +45,7 @@ class TeachersServiceController extends AbstractServiceController
             case '2':
                 switch ($this->url[1]) {
                     case 'tests': //URL: /{teacherId}/tests
-                        $response = $this->instantiateResourceObject('wrong2');
+                        $response = $this->instantiateResourceObject('Tests', $this->url[0]);
                         return $response;
                 }
             case '3': //URL: /{teacherId}/tests/{testId}

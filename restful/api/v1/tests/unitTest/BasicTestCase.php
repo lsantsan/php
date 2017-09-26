@@ -22,7 +22,9 @@ abstract class BasicTestCase extends TestCase
     protected $_databaseStub;
     protected $_teacherTblStub;
     protected $_tokenTblStub;
-    protected $tableNameList = ['TokenTbl', 'TeacherTbl'];
+    protected $_testTblStub;
+    protected $_codeTblStub;
+    protected $tableNameList = ['TokenTbl', 'TeacherTbl', 'TestTbl', 'CodeTbl'];
 
     protected function setUp()
     {

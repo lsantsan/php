@@ -25,18 +25,6 @@ class TokenTbl {
         return $result['result'];
     }
 
-    /*public function retrieveAccessToken($fv_userId, $fv_refreshToken) {
-        $sql = "CALL proc_retrieve_access_token(:user_id, :refresh_token, @result)";
-        $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(':user_id', $fv_userId, PDO::PARAM_STR);
-        $stmt->bindParam(':refresh_token', $fv_refreshToken, PDO::PARAM_STR);
-        $stmt->execute();
-        $stmt->closeCursor();
-        // execute the second query to get result.
-        $result = $this->db->query("SELECT @result AS result")->fetch();
-        return $result['result']; //Returns 0-> not found; Returns access token;
-    }*/
-    
     public function retrieveToken($fv_accessToken) {
         $sql = "CALL proc_retrieve_token(:access_token)";
         $stmt = $this->db->prepare($sql);

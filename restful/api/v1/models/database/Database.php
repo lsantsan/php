@@ -6,27 +6,36 @@ use \PDO;
 
 require_once 'TeacherTbl.php';
 require_once 'TokenTbl.php';
-require_once (__DIR__ . '/../Message.php');
+require_once 'CodeTbl.php';
+require_once 'TestTbl.php';
+require_once(__DIR__ . '/../Message.php');
 
 /* This class has a collection of all the tables in the database. Each table is a class that has
  * all the procedures.
  */
 
-class Database {
+class Database
+{
 
     //LIST OF TABLE CLASSES   
     public $teacherTbl = null;
     public $tokenTbl = null;
+    public $codeTbl = null;
+    public $testTbl = null;
 
-    public function __construct() {
+    public function __construct()
+    {
         $dbConnection = $this->connectDb();
-        
+
         //INSTANTIATING TABLE CLASSES
         $this->teacherTbl = new TeacherTbl($dbConnection);
         $this->tokenTbl = new TokenTbl($dbConnection);
+        $this->codeTbl = new CodeTbl($dbConnection);
+        $this->testTbl = new TestTbl($dbConnection);
     }
 
-    private function connectDb() {
+    private function connectDb()
+    {
         $dsn = 'mysql:host=localhost;dbname=selnate';
         $db_username = 'dbuser';
         $db_password = 'selnatecangetin';
