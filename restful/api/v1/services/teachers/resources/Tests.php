@@ -69,4 +69,15 @@ class Tests extends AbstractService
         }
     }
 
+    public function put($teacherId, $testId)
+    {
+        //Building JSON response
+        $resultArray = array(
+            'code' => $teacherId,
+            'message' => 'Worked',
+            'details' => array('test' => $testId)
+        );
+        return $resultArray;
+    }
+
 }

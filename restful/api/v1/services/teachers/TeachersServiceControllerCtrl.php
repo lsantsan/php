@@ -39,18 +39,24 @@ class TeachersServiceController extends AbstractServiceController
                         $response = $this->instantiateResourceObject('AccessToken');
                         return $response;
                     default : //URL: /{teacherId}
-                        $response = $this->instantiateResourceObject('Teachers', $this->url[0]);
+                        $requestParams = array_slice($this->url, 0, 1);
+                        $response = $this->instantiateResourceObject('Teachers', $requestParams);
                         return $response;
                 }
             case '2':
                 switch ($this->url[1]) {
                     case 'tests': //URL: /{teacherId}/tests
-                        $response = $this->instantiateResourceObject('Tests', $this->url[0]);
+                        $requestParams = array_slice($this->url, 0, 1);
+                        $response = $this->instantiateResourceObject('Tests', $requestParams);
                         return $response;
                 }
-            case '3': //URL: /{teacherId}/tests/{testId}
-                $response = $this->instantiateResourceObject('wrong3');
-                return $response;
+            case '3':
+                switch ($this->url[1]) {
+                    case 'tests': //URL: /{teacherId}/tests/{testId}
+                        $requestParams = array($this->url[0], $this->url[2]);
+                        $response = $this->instantiateResourceObject('Tests', $requestParams);
+                        return $response;
+                }
             default :
                 $responseMessage = new Message("rest-111", "Resource Not Found", "Url $this->url is not available.");
                 $httpCode = 404;
@@ -68,8 +74,14 @@ class TeachersServiceController extends AbstractServiceController
                 $response = $resourceObject->{$this->method}();
                 return $response;
             } else {
-                $response = $resourceObject->{$this->method}($requestParameters);
-                return $response;
+                switch (count($requestParameters)) {
+                    case '1' :
+                        $response = $resourceObject->{$this->method}($requestParameters[0]);
+                        return $response;
+                    case '2' :
+                        $response = $resourceObject->{$this->method}($requestParameters[0], $requestParameters[1]);
+                        return $response;
+                }
             }
 
         } else {
