@@ -22,6 +22,7 @@ class CodeTbl
         $stmt->execute();
         $dbResult = $stmt->fetch();
         $code = new Code(
+            $dbResult['id'],
             $dbResult['first_part'],
             $dbResult['last_digits'],
             $dbResult['is_active']);

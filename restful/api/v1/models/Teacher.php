@@ -4,6 +4,7 @@ namespace lsantsan\model;
 
 class Teacher {
 
+    // attributes are public so they can become json
     public $id;
     public $username;
     public $firstName;

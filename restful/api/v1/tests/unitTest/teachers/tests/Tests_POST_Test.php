@@ -6,10 +6,12 @@ namespace lsantsan\unitTest;
 use lsantsan\service\controller\TeachersServiceController;
 use lsantsan\model\ServiceException;
 use lsantsan\model\Code;
+use lsantsan\model\Test;
 use \PDOException;
 
 require_once(__DIR__ . '/../../BasicTestCase.php');
 require_once(__DIR__ . '/../../../../models/Code.php');
+require_once(__DIR__ . '/../../../../models/Test.php');
 
 
 class Tests_POST_Test extends BasicTestCase
@@ -19,7 +21,7 @@ class Tests_POST_Test extends BasicTestCase
     protected $serviceDataArray = array(
         'method' => 'POST',
         'url' => [Tests_POST_Test::TEACHER_ID, 'tests']); //URL: /{teacherId}/tests
-    protected $requiredInputsArray = ['accessToken', 'duration', 'instructions', 'prompt', 'semester', 'type'];
+    protected $requiredInputsArray = ['accessToken', 'duration', 'instructions', 'prompt', 'semesterId', 'testTypeId'];
     protected $basenameFile = 'Tests.php';
 
     public function testTestsPOST_Success()
@@ -32,15 +34,17 @@ class Tests_POST_Test extends BasicTestCase
 
         //Input
         $accessToken = '9c8838a2942e47dff29e5b5dd3f0d9d6';
-        $duration = '30';
+        $duration = 30;
         $instructions = 'These are the instructions.';
         $prompt = 'This is the prompt.';
-        $semester = 'F';
-        $type = 'E';
-        $currentYear = substr(date("Y"), 2, 3); //Last two digits of the year.
-        $codeFirstPart = $semester . $currentYear . $type;
+        $semesterId = 1;
+        $testTypeId = 2;
         $testId = 12;
+        $codeId = 9;
+        $currentYear = substr(date("Y"), 2, 3); //Last two digits of the year.
+        $codeFirstPart = 'F' . $currentYear . 'J';
         $consumerId = Tests_POST_Test::TEACHER_ID;
+        $testObjReturn = new Test($consumerId, $duration, $instructions, $prompt, $semesterId, $testTypeId, $testId);
 
         //Output
         $lastDigits = '451';
@@ -49,7 +53,7 @@ class Tests_POST_Test extends BasicTestCase
         $message = 'Test created';
         $details = array('testCode' => $testCode);
 
-        $jsonInput = $this->createInputJson($accessToken, $duration, $instructions, $prompt, $semester, $type);
+        $jsonInput = $this->createInputJson($accessToken, $duration, $instructions, $prompt, $semesterId, $testTypeId);
         $jsonOutput = $this->createOutputJson($code, $message, $details);
 
         $this->serviceDataArray['payload'] = json_encode($jsonInput);
@@ -65,20 +69,28 @@ class Tests_POST_Test extends BasicTestCase
         $this->_testTblStub->expects($this->once())
             ->method('createTest')
             ->with(
-                $this->stringContains($consumerId)
-                , $this->stringContains($codeFirstPart)
-                , $this->stringContains($duration)
-                , $this->stringContains($instructions)
-                , $this->stringContains($prompt)
+                $this->callback(function ($_testObj) {
+                    if ( // This function can't access the test's input variables
+                        ($_testObj->teacherId == 4422) &&
+                        ($_testObj->duration == 30) &&
+                        ($_testObj->instructions == 'These are the instructions.') &&
+                        ($_testObj->prompt == 'This is the prompt.') &&
+                        ($_testObj->semesterId == 1) &&
+                        ($_testObj->testTypeId == 2)
+                    ) {
+                        return true;
+                    }
+                    return false;
+                })
             )
-            ->willReturn($testId);
+            ->willReturn($testObjReturn);
 
         $this->_codeTblStub->expects($this->once())
             ->method('getCodeByTestId')
             ->with(
                 $this->stringContains($testId)
             )
-            ->willReturn(new Code($codeFirstPart, $lastDigits, 1));
+            ->willReturn(new Code($codeId, $codeFirstPart, $lastDigits, 1));
 
         // UTIL STUB's mocked methods
         $this->_utilStub->expects($this->exactly(1))
@@ -114,8 +126,8 @@ class Tests_POST_Test extends BasicTestCase
         $duration = '30';
         $instructions = 'These are the instructions.';
         $prompt = 'This is the prompt.';
-        $semester = 'F';
-        $type = 'E';
+        $semesterId = 1;
+        $testTypeId = 2;
         $consumerId = 11;
 
         //Output
@@ -124,7 +136,7 @@ class Tests_POST_Test extends BasicTestCase
         $details = "Consumer and Teacher ids do not match.";
         $httpCode = 403;
 
-        $jsonInput = $this->createInputJson($accessToken, $duration, $instructions, $prompt, $semester, $type);
+        $jsonInput = $this->createInputJson($accessToken, $duration, $instructions, $prompt, $semesterId, $testTypeId);
         $jsonOutput = $this->createOutputJson($code, $message, $details);
 
         $this->serviceDataArray['payload'] = json_encode($jsonInput);
@@ -174,15 +186,15 @@ class Tests_POST_Test extends BasicTestCase
 
         //Input
         $accessToken = '9c8838a2942e47dff29e5b5dd3f0d9d6';
-        $duration = '30';
+        $duration = 30;
         $instructions = 'These are the instructions.';
         $prompt = 'This is the prompt.';
-        $semester = 'F';
-        $type = 'E';
-        $currentYear = substr(date("Y"), 2, 3); //Last two digits of the year.
-        $codeFirstPart = $semester . $currentYear . $type;
+        $semesterId = 1;
+        $testTypeId = 2;
         $testId = 0;
         $consumerId = Tests_POST_Test::TEACHER_ID;
+        $testObjReturn = new Test($consumerId, $duration, $instructions, $prompt, $semesterId, $testTypeId, $testId);
+
 
         //Output
         $code = 'rest-999';
@@ -190,7 +202,7 @@ class Tests_POST_Test extends BasicTestCase
         $details = "Something went wrong in the database while creating new test.";
         $httpCode = 500;
 
-        $jsonInput = $this->createInputJson($accessToken, $duration, $instructions, $prompt, $semester, $type);
+        $jsonInput = $this->createInputJson($accessToken, $duration, $instructions, $prompt, $semesterId, $testTypeId);
         $jsonOutput = $this->createOutputJson($code, $message, $details);
 
         $this->serviceDataArray['payload'] = json_encode($jsonInput);
@@ -206,13 +218,21 @@ class Tests_POST_Test extends BasicTestCase
         $this->_testTblStub->expects($this->once())
             ->method('createTest')
             ->with(
-                $this->stringContains($consumerId)
-                , $this->stringContains($codeFirstPart)
-                , $this->stringContains($duration)
-                , $this->stringContains($instructions)
-                , $this->stringContains($prompt)
+                $this->callback(function ($_testObj) {
+                    if ( // This function can't access the test's input variables
+                        ($_testObj->teacherId == 4422) &&
+                        ($_testObj->duration == 30) &&
+                        ($_testObj->instructions == 'These are the instructions.') &&
+                        ($_testObj->prompt == 'This is the prompt.') &&
+                        ($_testObj->semesterId == 1) &&
+                        ($_testObj->testTypeId == 2)
+                    ) {
+                        return true;
+                    }
+                    return false;
+                })
             )
-            ->willReturn($testId);
+            ->willReturn($testObjReturn);
 
         $this->_codeTblStub->expects($this->never())
             ->method('getCodeByTestId');
@@ -248,8 +268,8 @@ class Tests_POST_Test extends BasicTestCase
         $duration = '';
         $instructions = '';
         $prompt = '';
-        $semester = '';
-        $type = '';
+        $semesterId = '';
+        $testTypeId = '';
 
         //Output
         $emptyFieldName = [
@@ -257,15 +277,15 @@ class Tests_POST_Test extends BasicTestCase
             "duration cannot be empty.",
             "instructions cannot be empty.",
             "prompt cannot be empty.",
-            "semester cannot be empty.",
-            "type cannot be empty.",
+            "semesterId cannot be empty.",
+            "testTypeId cannot be empty.",
         ];
         $code = 'rest-101';
         $message = 'Empty Input';
         $details = $emptyFieldName;
         $httpCode = 400;
 
-        $jsonInput = $this->createInputJson($accessToken, $duration, $instructions, $prompt, $semester, $type);
+        $jsonInput = $this->createInputJson($accessToken, $duration, $instructions, $prompt, $semesterId, $testTypeId);
         $jsonOutput = $this->createOutputJson($code, $message, $details);
 
         $this->serviceDataArray['payload'] = json_encode($jsonInput);
@@ -299,8 +319,8 @@ class Tests_POST_Test extends BasicTestCase
         $duration = '30';
         $instructions = 'These are the instructions.';
         $prompt = 'This is the prompt.';
-        $semester = 'F';
-        $type = 'E';
+        $semesterId = 1;
+        $testTypeId = 2;
 
         //Output
         $code = 'rest-102';
@@ -308,7 +328,7 @@ class Tests_POST_Test extends BasicTestCase
         $details = "The service requires a valid access token.";
         $httpCode = 401;
 
-        $jsonInput = $this->createInputJson($accessToken, $duration, $instructions, $prompt, $semester, $type);
+        $jsonInput = $this->createInputJson($accessToken, $duration, $instructions, $prompt, $semesterId, $testTypeId);
         $jsonOutput = $this->createOutputJson($code, $message, $details);
 
         $this->serviceDataArray['payload'] = json_encode($jsonInput);
@@ -351,8 +371,8 @@ class Tests_POST_Test extends BasicTestCase
         $duration = '30';
         $instructions = 'These are the instructions.';
         $prompt = 'This is the prompt.';
-        $semester = 'F';
-        $type = 'E';
+        $semesterId = 'F';
+        $testTypeId = 'E';
         $consumerId = Tests_POST_Test::TEACHER_ID;
 
         //Output
@@ -361,7 +381,7 @@ class Tests_POST_Test extends BasicTestCase
         $details = "This access token has expired.";
         $httpCode = 401;
 
-        $jsonInput = $this->createInputJson($accessToken, $duration, $instructions, $prompt, $semester, $type);
+        $jsonInput = $this->createInputJson($accessToken, $duration, $instructions, $prompt, $semesterId, $testTypeId);
         $jsonOutput = $this->createOutputJson($code, $message, $details);
 
         $this->serviceDataArray['payload'] = json_encode($jsonInput);
@@ -401,17 +421,17 @@ class Tests_POST_Test extends BasicTestCase
         $duration = '30';
         $instructions = 'These are the instructions.';
         $prompt = 'This is the prompt.';
-        $semester = 'F';
-        $type = 'E';
+        $semesterId = 1;
+        $testTypeId = 2;
 
         //Output
         $code = 'proc-100';
         $message = 'Database Error';
         $pdoMessage = 'Message from PDOException';
-        $details = "$pdoMessage [FILE: C:\\wamp64\\www\\php\\restful\\api\\v1\\tests\\unitTest\\teachers\\tests\\Tests_POST_Test.php] [LINE: 425]";
+        $details = "$pdoMessage [FILE: C:\\wamp64\\www\\php\\restful\\api\\v1\\tests\\unitTest\\teachers\\tests\\Tests_POST_Test.php] [LINE: 445]";
         $httpCode = 500;
 
-        $jsonInput = $this->createInputJson($accessToken, $duration, $instructions, $prompt, $semester, $type);
+        $jsonInput = $this->createInputJson($accessToken, $duration, $instructions, $prompt, $semesterId, $testTypeId);
         $jsonOutput = $this->createOutputJson($code, $message, $details);
 
         $this->serviceDataArray['payload'] = json_encode($jsonInput);
@@ -458,8 +478,8 @@ class Tests_POST_Test extends BasicTestCase
         $duration = '30';
         $instructions = 'These are the instructions.';
         $prompt = 'This is the prompt.';
-        $semester = 'F';
-        $type = 'E';
+        $semesterId = 1;
+        $testTypeId = 2;
 
         //Output
         $arrayName = 'DependencyArray';
@@ -469,7 +489,7 @@ class Tests_POST_Test extends BasicTestCase
         $details = "$this->basenameFile => Element: $elementName from $arrayName is null or empty.";
         $httpCode = 500;
 
-        $jsonInput = $this->createInputJson($accessToken, $duration, $instructions, $prompt, $semester, $type);
+        $jsonInput = $this->createInputJson($accessToken, $duration, $instructions, $prompt, $semesterId, $testTypeId);
         $jsonOutput = $this->createOutputJson($code, $message, $details);
 
         $this->serviceDataArray['payload'] = json_encode($jsonInput);
@@ -496,15 +516,15 @@ class Tests_POST_Test extends BasicTestCase
     }
 
 
-    private function createInputJson($accessToken, $duration, $instructions, $prompt, $semester, $type)
+    private function createInputJson($accessToken, $duration, $instructions, $prompt, $semesterId, $testTypeId)
     {
         return array(
             'accessToken' => $accessToken,
             'duration' => $duration,
             'instructions' => $instructions,
             'prompt' => $prompt,
-            'semester' => $semester,
-            'type' => $type);
+            'semesterId' => $semesterId,
+            'testTypeId' => $testTypeId);
     }
 
 }

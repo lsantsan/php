@@ -3,7 +3,8 @@
 namespace lsantsan\model;
 
 class Message{
-    
+
+    // attributes are public so they can become json
     public $code;
     public $message;
     public $details;

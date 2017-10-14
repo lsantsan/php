@@ -34,9 +34,19 @@ class TeacherTbl
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':username', $fv_username, PDO::PARAM_STR);
         $stmt->execute();
-        $result = $stmt->fetch();
+        $dbResult = $stmt->fetch();
+        $teacher = new Teacher(
+            $dbResult['id'],
+            $dbResult['username'],
+            $dbResult['first_name'],
+            $dbResult['last_name'],
+            $dbResult['is_admin'],
+            $dbResult['is_active'],
+            $dbResult['reset_password'],
+            $dbResult['creation_date']);
         $stmt->closeCursor();
-        return $result;
+
+        return $teacher;
     }
 
     public function retrieveTeacherById($fv_teacherId)

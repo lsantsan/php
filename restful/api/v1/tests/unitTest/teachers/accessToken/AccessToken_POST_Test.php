@@ -1,12 +1,15 @@
 <?php
 
 namespace lsantsan\unitTest;
+
 use lsantsan\service\controller\TeachersServiceController;
 use lsantsan\model\ServiceException;
+use lsantsan\model\Teacher;
 use \PDOException;
 
 
 require_once(__DIR__ . '/../../BasicTestCase.php');
+require_once(__DIR__ . '/../../../../models/Teacher.php');
 
 class AccessToken_POST_Test extends BasicTestCase
 {
@@ -47,7 +50,7 @@ class AccessToken_POST_Test extends BasicTestCase
             ->method('retrieveTeacherByUsername')
             ->with(
                 $this->stringContains($username))
-            ->willReturn(array('id' => $userId));
+            ->willReturn(new Teacher($userId, null, null, null, null, null, null, null));
 
         $this->_tokenTblStub->expects($this->once())
             ->method('saveToken')
@@ -192,7 +195,7 @@ class AccessToken_POST_Test extends BasicTestCase
         $code = 'proc-100';
         $message = 'Database Error';
         $pdoMessage = 'Message from PDOException';
-        $details = "$pdoMessage [FILE: C:\\wamp64\\www\\php\\restful\\api\\v1\\tests\\unitTest\\teachers\\accessToken\\AccessToken_POST_Test.php] [LINE: 209]";
+        $details = "$pdoMessage [FILE: C:\\wamp64\\www\\php\\restful\\api\\v1\\tests\\unitTest\\teachers\\accessToken\\AccessToken_POST_Test.php] [LINE: 212]";
         $httpCode = 500;
 
         $jsonInput = $this->createInputJson($username, $password);

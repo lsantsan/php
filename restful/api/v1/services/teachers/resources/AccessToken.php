@@ -37,7 +37,7 @@ class AccessToken extends AbstractService{
             }
 
             //Generating tokens and Saving them on database
-            $userId = $userInfo['id'];
+            $userId = $userInfo->id;
             $lv_accessToken = $this->utilObj->generateToken();
             $dbResult2 = $this->databaseObj->tokenTbl->saveToken($userId, $lv_accessToken);
             (!isset($dbResult2)) ? $this->utilObj->createProcedureException('saveToken', 'TokenTbl', basename(__FILE__)) : '';
