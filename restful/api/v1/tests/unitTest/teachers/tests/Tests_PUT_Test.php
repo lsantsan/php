@@ -24,7 +24,7 @@ class Tests_PUT_Test extends BasicTestCase
     protected $requiredInputsArray = ['accessToken', 'duration', 'instructions', 'prompt', 'semesterId', 'testTypeId'];
     protected $basenameFile = 'Tests.php';
 
-    public function testTestsPUT_Success_Keep_Code() //Database's procedure should NOT change test's code
+    public function testTestsPUT_Success_KeepCode() //Database's procedure should NOT change test's code
     {
         //Defining the mocked methods
         $this->createUtilMock(['checkInput', 'nullCheckForTables']);
@@ -129,7 +129,7 @@ class Tests_PUT_Test extends BasicTestCase
         );
     }
 
-    public function testTestsPUT_Success_New_Code() //Database's procedure SHOULD change test's code
+    public function testTestsPUT_Success_NewCode() //Database's procedure SHOULD change test's code
     {
         //Defining the mocked methods
         $this->createUtilMock(['checkInput', 'nullCheckForTables']);
@@ -279,7 +279,7 @@ class Tests_PUT_Test extends BasicTestCase
         $teacherService->runService();
     }
 
-    public function testTestPUT_Consumer_Cannot_Modify_Test()
+    public function testTestPUT_ConsumerCannotModifyTest()
     {
         //Defining the mocked methods
         $this->createUtilMock(['checkInput', 'nullCheckForTables']);
