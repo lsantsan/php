@@ -29,7 +29,7 @@ class Teachers extends AbstractService
 
             //Checking consumer's access
             $consumerId = $this->hasAccess($lv_accessToken);
-            $this->isAdmin($consumerId);
+            $this->shouldBeAdmin($consumerId);
 
             //Creating teacher account
             $newTeacherId = $this->databaseObj->teacherTbl->createTeacherAccount($consumerId, $lv_username, $lv_firstName, $lv_lastName, $lv_password, $lv_isAdmin);
@@ -130,7 +130,7 @@ class Teachers extends AbstractService
 
             //Checking consumer's access
             $consumerId = $this->hasAccess($lv_accessToken);
-            $this->isAdmin($consumerId);
+            $this->shouldBeAdmin($consumerId);
 
             //Creating teacher accounts
             $teacherList = $this->databaseObj->teacherTbl->getAllTeachers($consumerId);
@@ -157,9 +157,9 @@ class Teachers extends AbstractService
 
         //Checking consumer's access
         $consumerId = $this->hasAccess($lv_accessToken);
-        $this->isAdmin($consumerId);
+        $this->shouldBeAdmin($consumerId);
 
-        //Creating teacher account
+        //Getting teacher account
         $teacher = $this->databaseObj->teacherTbl->getTeacherById($teacherId);
 
         return $teacher;
@@ -184,7 +184,7 @@ class Teachers extends AbstractService
 
             //Checking consumer's access
             $consumerId = $this->hasAccess($lv_accessToken);
-            $this->isAdmin($consumerId);
+            $this->shouldBeAdmin($consumerId);
 
             //Creating teacher account
             $teacher = $this->databaseObj->teacherTbl->getTeacherByUsername($teacherUsername);

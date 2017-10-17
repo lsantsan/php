@@ -22,12 +22,12 @@ class TestTbl
         $stmt->bindParam(':instructions', $fv_testObj->instructions, PDO::PARAM_STR);
         $stmt->bindParam(':prompt', $fv_testObj->prompt, PDO::PARAM_STR);
         $stmt->bindParam(':semesterId', $fv_testObj->semesterId, PDO::PARAM_INT);
-        $stmt->bindParam(':testTypeId', $fv_testObj->semesterId, PDO::PARAM_INT);
+        $stmt->bindParam(':testTypeId', $fv_testObj->testTypeId, PDO::PARAM_INT);
         $stmt->execute();
         $stmt->closeCursor();
         // execute the second query to get result.
         $testId = $this->db->query("SELECT @testId AS result")->fetch();
-        $fv_testObj->id = $testId;
+        $fv_testObj->id = $testId['result'];
         return $fv_testObj;
     }
 
@@ -37,22 +37,37 @@ class TestTbl
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':testId', $fv_testId, PDO::PARAM_INT);
         $stmt->execute();
-        $result = $stmt->fetch();
+        $dbResult = $stmt->fetch();
+        if ($dbResult == null ||
+            (isset($dbResult['result']) && $dbResult['result'] == 0)) {
+            return null;
+        }
+        $testObj = new Test(
+            $dbResult['teacher_id'],
+            $dbResult['duration'],
+            $dbResult['instructions'],
+            $dbResult['prompt'],
+            $dbResult['semester_id'],
+            $dbResult['test_type_id'],
+            $dbResult['id'],
+            $dbResult['code_id'],
+            $dbResult['is_active'],
+            $dbResult['creation_date']);
         $stmt->closeCursor();
-        return $result;
+        return $testObj;
     }
 
-    public function updateTest($fv_testId, $fv_codeId, $fv_codeFirstPart, $fv_codeLastDigits, $fv_duration, $fv_instructions, $fv_prompt)
+    public function updateTest($fv_testObj)
     {
-        $sql = "CALL proc_update_test(:testId, :codeId, :codeFirstPart, :codeLastDigits, :duration, :instructions, :prompt, @result)";
+        $sql = "CALL proc_update_test(:testId, :teacherId, :duration, :instructions, :prompt, :semesterId, :testTypeId, @result)";
         $stmt = $this->db->prepare($sql);
-        $stmt->bindParam(':testId', $fv_testId, PDO::PARAM_INT);
-        $stmt->bindParam(':codeId', $fv_codeId, PDO::PARAM_INT);
-        $stmt->bindParam(':codeFirstPart', $fv_codeFirstPart, PDO::PARAM_STR);
-        $stmt->bindParam(':codeLastDigits', $fv_codeLastDigits, PDO::PARAM_INT);
-        $stmt->bindParam(':duration', $fv_duration, PDO::PARAM_INT);
-        $stmt->bindParam(':instructions', $fv_instructions, PDO::PARAM_STR);
-        $stmt->bindParam(':prompt', $fv_prompt, PDO::PARAM_STR);
+        $stmt->bindParam(':testId', $fv_testObj->id, PDO::PARAM_INT);
+        $stmt->bindParam(':teacherId', $fv_testObj->teacherId, PDO::PARAM_INT);
+        $stmt->bindParam(':duration', $fv_testObj->duration, PDO::PARAM_INT);
+        $stmt->bindParam(':instructions', $fv_testObj->instructions, PDO::PARAM_STR);
+        $stmt->bindParam(':prompt', $fv_testObj->prompt, PDO::PARAM_STR);
+        $stmt->bindParam(':semesterId', $fv_testObj->semesterId, PDO::PARAM_STR);
+        $stmt->bindParam(':testTypeId', $fv_testObj->testTypeId, PDO::PARAM_STR);
         $stmt->execute();
         $stmt->closeCursor();
         // execute the second query to get result.

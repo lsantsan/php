@@ -4,7 +4,6 @@ namespace lsantsan\model;
 
 class Test
 {
-
     public $id;
     public $teacherId;
     public $codeId;

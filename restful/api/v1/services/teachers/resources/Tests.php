@@ -8,6 +8,7 @@ use lsantsan\model\ServiceException;
 use \PDOException;
 
 require_once(__DIR__ . '/../../Util.php');
+require_once(__DIR__ . '/../../../models/Test.php');
 
 class Tests extends AbstractService
 {
@@ -25,8 +26,8 @@ class Tests extends AbstractService
             $lv_duration = $this->inputArray['duration'];
             $lv_instructions = $this->inputArray['instructions'];
             $lv_prompt = $this->inputArray['prompt'];
-            $lv_semesterId = $this->inputArray['semesterId']; //i.e. F,S,W => Fall, Spring, Winter
-            $lv_testTypeId = $this->inputArray['testTypeId']; //i.e. E,J,T => Exit, Journal, Timed
+            $lv_semesterId = $this->inputArray['semesterId'];
+            $lv_testTypeId = $this->inputArray['testTypeId'];
 
             $testObj = new Test($teacherId, $lv_duration, $lv_instructions, $lv_prompt, $lv_semesterId, $lv_testTypeId);
             //Checking consumer's access
@@ -66,58 +67,67 @@ class Tests extends AbstractService
         }
     }
 
-/*    public function put($teacherId, $testId)
+    public function put($teacherId, $testId)
     {
-        $requiredInputsArray = ['accessToken', 'duration', 'instructions', 'prompt', 'semester', 'type'];
+        $requiredInputsArray = ['accessToken', 'duration', 'instructions', 'prompt', 'semesterId', 'testTypeId'];
         try {
             $this->setup($requiredInputsArray);
 
             //Handling inputs
             $lv_accessToken = $this->inputArray['accessToken'];
-            $lv_teacherId = $teacherId;
-            $lv_testId = $testId;
             $lv_duration = $this->inputArray['duration'];
             $lv_instructions = $this->inputArray['instructions'];
             $lv_prompt = $this->inputArray['prompt'];
-            $lv_semester = $this->inputArray['semester']; //i.e. F,S,W => Fall, Spring, Winter
-            $lv_type = $this->inputArray['type']; //i.e. E,J,T => Exit, Journal, Timed
-
+            $lv_semesterId = $this->inputArray['semesterId'];
+            $lv_testTypeId = $this->inputArray['testTypeId'];
+            $newTestObj = new Test($teacherId, $lv_duration, $lv_instructions, $lv_prompt, $lv_semesterId, $lv_testTypeId, $testId);
 
             //Checking consumer's access
             $consumerId = $this->hasAccess($lv_accessToken);
-            if ($consumerId != $lv_teacherId) {
+            if ($consumerId != $teacherId) {
                 $responseMessage = new Message("rest-104", "Action Denied", "Consumer and Teacher ids do not match.");
                 $httpCode = 403;
                 throw new ServiceException($responseMessage, $httpCode);
             }
 
-            $testResult = $this->databaseObj->testTbl->getTestByTestId($lv_testId);
-            if ($testResult == null || $testResult['teacher_id'] == null) {
+            //Checking if test exists
+            $testObj = $this->databaseObj->testTbl->getTestByTestId($testId);
+            if ($testObj == null) {
                 $responseMessage = new Message("rest-110", "Record Not Found", "Test not found.");
                 $httpCode = 404;
                 throw new ServiceException($responseMessage, $httpCode);
             }
 
-            $testOwner = $testResult['teacher_id'];
-            $isAdmin = $this->isAdmin($lv_teacherId);
-            if (!$isAdmin && $testOwner != $lv_teacherId) {
-                $responseMessage = new Message("rest-104", "Action Denied", "Consumer does not own this essay.");
+            //Checking if consumer can modify test
+            $testOwner = $testObj->teacherId;
+            $isAdmin = $this->isAdmin($teacherId);
+            if (!$isAdmin && $testOwner != $teacherId) {
+                $responseMessage = new Message("rest-104", "Action Denied", "Consumer cannot modify this test.");
                 $httpCode = 403;
                 throw new ServiceException($responseMessage, $httpCode);
             }
 
-            $codeObj = $this->databaseObj->codeTbl->getCodeByTestId($lv_teacherId);
-            if ($codeObj == null || $codeObj->id == null) {
-                $responseMessage = new Message("rest-110", "Record Not Found", "Code not found.");
-                $httpCode = 404;
+            //Update test
+            $updateResult = $this->databaseObj->testTbl->updateTest($newTestObj);
+            if ($updateResult == 0 || $updateResult == -1) {
+                $responseMessage = new Message("rest-999", "Internal Error", "A problem happened while updating test.");
+                $httpCode = 500;
                 throw new ServiceException($responseMessage, $httpCode);
             }
 
+            //Get test code
+            $code = $this->databaseObj->codeTbl->getCodeByTestId($newTestObj->id);
+            if ($code == null) {
+                $responseMessage = new Message("rest-999", "Internal Error", "A problem happened while getting code.");
+                $httpCode = 500;
+                throw new ServiceException($responseMessage, $httpCode);
+            }
+            $lv_testCode = $code->firstPart . $code->lastDigits;
 
             //Building JSON response
             $resultArray = array(
                 'code' => 'rest-200',
-                'message' => 'Test created',
+                'message' => 'Test updated',
                 'details' => array('testCode' => $lv_testCode)
             );
             return $resultArray;
@@ -129,7 +139,7 @@ class Tests extends AbstractService
         } catch (ServiceException $ex) {
             throw $ex;
         }
-    }*/
+    }
 
     //Building codeFirstPart
     private function buildCodeFirstPart($lv_semester, $lv_type)

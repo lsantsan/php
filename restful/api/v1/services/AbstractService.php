@@ -65,6 +65,15 @@ abstract class AbstractService
     {
         $isAdmin = $this->databaseObj->teacherTbl->isTeacherAdmin($userId);
         if ($isAdmin != 1) {
+            return false;
+        }
+        return true;
+    }
+
+    public function shouldBeAdmin($userId)
+    {
+        $isAdmin = $this->isAdmin($userId);
+        if ($isAdmin != 1) {
             $responseMessage = new Message("rest-104", "Action Denied", "This consumer does not have enough privilege.");
             $httpCode = 403;
             throw new ServiceException($responseMessage, $httpCode);

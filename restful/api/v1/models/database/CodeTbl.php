@@ -21,6 +21,10 @@ class CodeTbl
         $stmt->bindParam(':testId', $fv_testId, PDO::PARAM_INT);
         $stmt->execute();
         $dbResult = $stmt->fetch();
+        if ($dbResult == null ||
+            (isset($dbResult['result']) && $dbResult['result'] == 0)) {
+            return null;
+        }
         $code = new Code(
             $dbResult['id'],
             $dbResult['first_part'],
