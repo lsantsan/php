@@ -31,7 +31,16 @@ class Teachers_GET_ById_Test extends BasicTestCase
         $consumerId = '456';
 
         //Output
-        $teacherOutputArray = $this->createTeacherOutputArray();
+        $teacherOutputArray = new Teacher(
+            1,
+            "username1",
+            "first_name1",
+            "last_name1",
+            "is_admin1",
+            "is_active1",
+            "reset_password1",
+            "creation_date1"
+        );
 
         $arrayInput = array('accessToken' => $accessToken);
         $jsonOutput = $teacherOutputArray;
@@ -271,7 +280,7 @@ class Teachers_GET_ById_Test extends BasicTestCase
         $code = 'proc-100';
         $message = 'Database Error';
         $pdoMessage = 'Message from PDOException';
-        $details = "$pdoMessage [FILE: C:\\wamp64\\www\\php\\restful\\api\\v1\\tests\\unitTest\\teachers\\Teachers_GET_ById_Test.php] [LINE: 288]";
+        $details = "$pdoMessage [FILE: C:\\wamp64\\www\\php\\restful\\api\\v1\\tests\\unitTest\\teachers\\Teachers_GET_ById_Test.php] [LINE: 297]";
         $httpCode = 500;
 
         $arrayInput = array('accessToken' => $accessToken);
@@ -353,20 +362,4 @@ class Teachers_GET_ById_Test extends BasicTestCase
         $teacherService->runService();
     }
 
-    private function createTeacherOutputArray()
-    {
-        for ($x = 1; $x <= 5; $x++) {
-            $list[] = new Teacher(
-                $x,
-                "username$x",
-                "first_name$x",
-                "last_name$x",
-                "is_admin$x",
-                "is_active$x",
-                "reset_password$x",
-                "creation_date$x"
-            );
-        }
-        return $list;
-    }
 }
