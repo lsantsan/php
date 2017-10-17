@@ -141,7 +141,48 @@ class Tests extends AbstractService
         }
     }
 
-    //Building codeFirstPart
+    public function get($teacherId, $testId)
+    {
+        $requiredInputsArray = ['accessToken'];
+
+        try {
+            $this->setup($requiredInputsArray);
+
+            //Handling inputs
+            $lv_accessToken = $this->inputArray['accessToken'];
+
+            //Checking consumer's access
+            $consumerId = $this->hasAccess($lv_accessToken);
+
+            //Checking if consumer can modify test
+            $isConsumerAdmin = $this->isAdmin($consumerId);
+            if (!$isConsumerAdmin && $consumerId != $teacherId) {
+                $responseMessage = new Message("rest-104", "Action Denied", "Consumer cannot access this test.");
+                $httpCode = 403;
+                throw new ServiceException($responseMessage, $httpCode);
+            }
+
+            //Getting test
+            $testObj = $this->databaseObj->testTbl->getTestByTestId($testId);
+            if ($testObj == null) {
+                $responseMessage = new Message("rest-110", "Record Not Found", "Test not found.");
+                $httpCode = 404;
+                throw new ServiceException($responseMessage, $httpCode);
+            }
+
+            return $testObj;
+
+        } catch (PDOException $ex) {
+            $detail = "{$ex->getMessage()} [FILE: {$ex->getFile()}] [LINE: {$ex->getLine()}]";
+            $responseMessage = new Message("proc-100", "Database Error", $detail);
+            $httpCode = 500;
+            throw new ServiceException($responseMessage, $httpCode);
+        } catch (ServiceException $ex) {
+            throw $ex;
+        }
+    }
+
+
     private function buildCodeFirstPart($lv_semester, $lv_type)
     {
         $lv_current_year = substr(date("Y"), 2, 3); //Last two digits of the year.
