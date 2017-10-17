@@ -310,12 +310,12 @@ class Teachers_GET_ById_Test extends BasicTestCase
         $teacherService->runService();
     }
 
-    public function testTeacherPOST_DatabaseDependencyNull()
+    public function testTeacherGET_DatabaseDependencyNull()
     {
         $this->checkDependency('database');
     }
 
-    public function testTeacherPOST_UtilDependencyNull()
+    public function testTeacherGET_UtilDependencyNull()
     {
         $this->checkDependency('util');
     }
