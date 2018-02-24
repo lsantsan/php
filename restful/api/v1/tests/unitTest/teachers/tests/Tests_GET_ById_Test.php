@@ -4,7 +4,6 @@ namespace lsantsan\unitTest;
 
 use lsantsan\service\controller\TeachersServiceController;
 use lsantsan\model\ServiceException;
-use lsantsan\model\Code;
 use lsantsan\model\Test;
 use \PDOException;
 
@@ -12,14 +11,14 @@ require_once(__DIR__ . '/../../BasicTestCase.php');
 require_once(__DIR__ . '/../../../../models/Code.php');
 require_once(__DIR__ . '/../../../../models/Test.php');
 
-class Tests_GET_Test extends BasicTestCase
+class Tests_GET_ById_Test extends BasicTestCase
 {
 
     const TEACHER_ID = 233;
     const TEST_ID = 12;
     protected $serviceDataArray = array(
         'method' => 'GET',
-        'url' => [Tests_GET_Test::TEACHER_ID, 'tests', Tests_GET_Test::TEST_ID]); //URL: /{teacherId}/tests/{testId}
+        'url' => [Tests_GET_ById_Test::TEACHER_ID, 'tests', Tests_GET_ById_Test::TEST_ID]); //URL: /{teacherId}/tests/{testId}
     protected $requiredInputsArray = ['accessToken'];
     protected $basenameFile = 'Tests.php';
 
@@ -33,16 +32,16 @@ class Tests_GET_Test extends BasicTestCase
 
         //Input
         $accessToken = '9c8838a2942e47dff29e5b5dd3f0d9d6';
-        $consumerId = Tests_GET_Test::TEACHER_ID;
+        $consumerId = Tests_GET_ById_Test::TEACHER_ID;
 
         //Output
-        $teacherId = Tests_GET_Test::TEACHER_ID;
+        $teacherId = Tests_GET_ById_Test::TEACHER_ID;
         $duration = 30;
         $instructions = 'These are the instructions.';
         $prompt = 'This is the prompt.';
         $semesterId = 1;
         $testTypeId = 2;
-        $testId = Tests_GET_Test::TEST_ID;
+        $testId = Tests_GET_ById_Test::TEST_ID;
         $codeId = 9;
         $isActive = 1;
         $creationDate = '2016-06-11 00:00:00';
@@ -105,8 +104,8 @@ class Tests_GET_Test extends BasicTestCase
 
         //Input
         $accessToken = '9c8838a2942e47dff29e5b5dd3f0d9d6';
-        $consumerId = Tests_GET_Test::TEACHER_ID;
-        $testId = Tests_GET_Test::TEST_ID;
+        $consumerId = Tests_GET_ById_Test::TEACHER_ID;
+        $testId = Tests_GET_ById_Test::TEST_ID;
 
         //Output
         $code = 'rest-110';
@@ -256,7 +255,8 @@ class Tests_GET_Test extends BasicTestCase
         //Defining the mocked methods
         $this->createUtilMock(['checkInput', 'nullCheckForTables']);
         $this->createTableMock('TokenTbl', ['retrieveToken']);
-        $this->createTableMock('TeacherTbl', []);
+        $this->createTableMock('TeacherTbl', ['isTeacherAdmin']);
+        $this->createTableMock('TestTbl', ['getTestByTestId']);
 
         //Input
         $accessToken = 'asdvaq234';
@@ -358,7 +358,7 @@ class Tests_GET_Test extends BasicTestCase
         $code = 'proc-100';
         $message = 'Database Error';
         $pdoMessage = 'Message from PDOException';
-        $details = "$pdoMessage [FILE: C:\\wamp64\\www\\php\\restful\\api\\v1\\tests\\unitTest\\teachers\\tests\\Tests_GET_ById_Test.php] [LINE: 309]";
+        $details = "$pdoMessage [FILE: C:\\wamp64\\www\\php\\restful\\api\\v1\\tests\\unitTest\\teachers\\tests\\Tests_GET_ById_Test.php] [LINE: 374]";
         $httpCode = 500;
 
         $arrayInput = array('accessToken' => $accessToken);

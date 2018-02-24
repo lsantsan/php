@@ -57,6 +57,33 @@ class TestTbl
         return $testObj;
     }
 
+    public function getAllTests($fv_teacherId)
+    {
+        $sql = "CALL proc_retrieve_all_test(:teacherId)";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':teacherId', $fv_teacherId, PDO::PARAM_INT);
+        $stmt->execute();
+        $list = array();
+        foreach ($stmt->fetchAll() as $test) {
+            if ($test['is_active'] == '1') {
+                $list[] = new Test(
+                    $test['teacher_id'],
+                    $test['duration'],
+                    $test['instructions'],
+                    $test['prompt'],
+                    $test['semester_id'],
+                    $test['test_type_id'],
+                    $test['id'],
+                    $test['code_id'],
+                    $test['is_active'],
+                    $test['creation_date']
+                );
+            }
+        }
+        $stmt->closeCursor();
+        return $list;
+    }
+
     public function updateTest($fv_testObj)
     {
         $sql = "CALL proc_update_test(:testId, :teacherId, :duration, :instructions, :prompt, :semesterId, :testTypeId, @result)";

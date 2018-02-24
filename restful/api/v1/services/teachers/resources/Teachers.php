@@ -105,7 +105,7 @@ class Teachers extends AbstractService
         }
     }
 
-    public function get($teacherParam = null)
+    public function get($teacherParam = null) //PHP doesn't allow two methods with the same name
     {
         if (is_null($teacherParam)) {
             return $this->getAll();

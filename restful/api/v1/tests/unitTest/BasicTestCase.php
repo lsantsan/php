@@ -4,10 +4,7 @@ namespace lsantsan\unitTest;
 
 use PHPUnit\Framework\TestCase;
 
-require_once(__DIR__ . '/../../models/database/TeacherTbl.php');
-require_once(__DIR__ . '/../../models/database/TokenTbl.php');
 require_once(__DIR__ . '/../../models/database/Database.php');
-require_once(__DIR__ . '/../../services/AbstractServiceController.php');
 require_once(__DIR__ . '/../../services/teachers/TeachersServiceControllerCtrl.php');
 require_once(__DIR__ . '/../../services/Util.php');
 require_once(__DIR__ . '/../../models/ServiceException.php');
